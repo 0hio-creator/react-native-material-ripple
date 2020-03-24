@@ -117,6 +117,9 @@ export default class Ripple extends PureComponent {
 
   onPressOut(event) {
     let { onPressOut } = this.props;
+    let x = this.state.ripples
+    x[0].progress=x[0].progress.setValue(0)
+    this.setState(({ ripples }) => ({ ripples: x }));
 
     if ('function' === typeof onPressOut) {
       onPressOut(event);
@@ -125,7 +128,7 @@ export default class Ripple extends PureComponent {
 
   onAnimationEnd() {
     if (this.mounted) {
-      this.setState(({ ripples }) => ({ ripples: ripples.slice(1) }));
+      //this.setState(({ ripples }) => ({ ripples: ripples.slice(1) }));
     }
   }
 
@@ -170,7 +173,7 @@ export default class Ripple extends PureComponent {
 
     onRippleAnimation(animation, this.onAnimationEnd);
 
-    this.setState(({ ripples }) => ({ ripples: ripples.concat(ripple) }));
+    this.setState(({ ripples }) => ({ ripples: [ripple] }));
   }
 
   renderRipple({ unique, progress, locationX, locationY, R }) {
@@ -222,7 +225,6 @@ export default class Ripple extends PureComponent {
       onLongPress,
       onLayout,
       onRippleAnimation,
-      
       rippleColor,
       rippleOpacity,
       rippleDuration,
